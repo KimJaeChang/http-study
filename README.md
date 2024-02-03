@@ -13,11 +13,12 @@
           + ![img_1.png](images/packet-no-connection.png)
       + 비신뢰성
         + 중간에 패킷이 사라지면?
-          + ![img_2.png](images/no-packet.png)
+          + ![img_2.png](images/packet-disapper.png)
         + 패킷이 순서대로 오지 않으면?
-          + ![img_3.png](images/img_3.png)
+          + ![img_3.png](images/packet-no-order.png)
       + 프로그램 구분
         + 같은 IP를 사용하는 서버에서 통신하는 애플리케이션이 둘 이상이면?
-  + TCP, UDP
+  + TCP
+  + UDP
   + PORT
   + DNS

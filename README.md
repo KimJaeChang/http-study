@@ -57,6 +57,47 @@
           + 출발지 IP
           + 목적지 IP
       + ### 4. 네트워크 인터페이스 계층
+  + ### PORT
+    + 정의 : 
+      + 같은 IP 내에서 프로세스 구분
+    + 0 ~ 65535 할당 가능
+    + 0 ~ 1023 : 잘 알려진 포트, 사용하지 않는것이 좋음
+      + FTP : 20, 21
+      + TELNET : 23
+      + HTTP : 80
+      + HTTPS : 443
+  + ### DNS 
+    + 정의 : 
+      + 도메인 네임 시스템 (Domain Name System)
+    + 전화번호부
+    + 도메인 명을 IP 주소로 변환
+    + DNS 사용 :
+      + ![dns.png](images/dns.png)
++ ## URI (Uniform Resource Identifier)
+  + 정의 :
+    + Uniform : 리소스 식별하는 통일된 방식
+    + Resource : 자원, URI로 식별할 수 있는 모든 것(제한 없음)
+    + Identifier : 다른 항목과 구분하는데 필요한 정보
+    + 문법 : 
+      + scheme : //[userinfo@]host[:port][/path][?query][#fragment]
+      + 예) https://www.google.com:443/search?q=hello&hl=ko 
+      + 프로토콜 : https
+        + 어떤 방식으로 자원에 접근할 것인가 하는 약속 규칙
+      + 호스트 명 : www.google.com
+      + 포트 번호 : 443
+      + path : /search
+        + 리소스 경로, 계층적 구조
+      + query : q=hello&hl=ko
+        + key=value 형태
+        + ?로 시작, &로 추가 가능
+        + query parameter, query string 등으로 불림, 웹 서버에 제공하는 파라미터 문자 형태
+    + ### URL (Uniform Resource Locator) : 리소스가 있는 위치를 지정
+    + ### URN (Uniform Resource Name) : 리소스에 이름을 부여
+      + URL, URN 정의 : 
+        + 위치는 변할 수 있지만, 이름은 변하지 않는다.
+        + urn:isbn:8960777331 (어떤 책의 isbn URN)
+        + URN 이름만으로 실제 리소스를 찾을 수 있는 방법이 보편화 되지 않음
+        + 앞으로 URI를 URL과 같은 의미로 이야기
 + ## HTTP 메서드
   + ### API URI 고민
     + 리소스의 의미
@@ -73,7 +114,7 @@
       + 행위 : 조회, 등록, 삭제, 변경
     + 리소스는 명사, 행위는 동사
   + ### 메서드
-    + #### 속성 : 
+    + ### 속성 : 
       + 안전(Safe Methods)
         + 호출해도 리소스를 변경하지 않는다.
         + 안전은 해당 리소스만 고려한다.
@@ -100,7 +141,7 @@
         + GET, HEAD, POST, PATCH 캐시 가능
         + 실제로는 GET, HEAD 정도로만 캐시로 사용
           + POST, PATCH는 본문 내용까지 캐시 키로 고려해야 하는데, 구현이 쉽지 않음
-    + #### GET : 리소스 조회
+    + ### GET : 리소스 조회
       + 의미 : 
         + 리소스 조회
         + 서버에 전달하고 싶은 데이터는 query(쿼리 파라미터, 쿼리 스트릴)를 통해서 전달
@@ -112,7 +153,7 @@
           + ![http-method-get-2.png](images/http-method-get-2.png)
         + 3. 리소스 조회 - 응답 데이터
           + ![http-method-get-3.png](images/http-method-get-3.png)
-    + #### POST : 요청 데이터 처리, 주로 등록에 사용
+    + ### POST : 요청 데이터 처리, 주로 등록에 사용
       + 의미 : 
         + 요청 데이터 처리
         + <U>**메시지 바디를 통해 서버로 요청 데이터 전달**</U>
@@ -157,17 +198,17 @@
       + 중요! 클라이언트가 리소스를 식별
         + 클라이언트가 리소스 위치를 알고 URI 지정
         + POST와 차이점
-    + #### PATCH : 리소스 부분 변경
+    + ### PATCH : 리소스 부분 변경
       + 순서 : 
         + 리소스 부분 변경
           + ![http-method-patch-spot-change-1.png](images/http-method-patch-spot-change-1.png)
           + ![http-method-patch-spot-change-2.png](images/http-method-patch-spot-change-2.png)
-    + #### DELETE : 리소스 삭제
+    + ### DELETE : 리소스 삭제
       + 순서 : 
         + 리소스 삭제
           + ![http-method-delete-1.png](images/http-method-delete-1.png)
           + ![http-method-delete-2.png](images/http-method-delete-2.png)
-    + #### HEAD : GET과 동일하지만 메시지 부분을 제외하고, 상태 줄과 헤더만 반환
-    + #### OPTIONS : 대상 리소스에 대한 통신 가능 옵션(메서드)을 설명(주로 CORS에서 사용)
-    + #### CONNECT : 대상 자원으로 식별되는 서버에 대한 터널을 설정
-    + #### TRACE : 대상 리소스에 대한 경로를 따라 메시지 루프백 테스트를 수행
+    + ### HEAD : GET과 동일하지만 메시지 부분을 제외하고, 상태 줄과 헤더만 반환
+    + ### OPTIONS : 대상 리소스에 대한 통신 가능 옵션(메서드)을 설명(주로 CORS에서 사용)
+    + ### CONNECT : 대상 자원으로 식별되는 서버에 대한 터널을 설정
+    + ### TRACE : 대상 리소스에 대한 경로를 따라 메시지 루프백 테스트를 수행

@@ -72,37 +72,79 @@
       + 리소스 : 회원
       + 행위 : 조회, 등록, 삭제, 변경
     + 리소스는 명사, 행위는 동사
-  + 메서드 종류
+  + 메서드
+    + 속성 : 
+      + 안전(Safe Methods)
+      + 멱등(Idempotent Methods)
+      + 캐시가능(Cacheable Methods)
     + GET : 리소스 조회
       + 의미 : 
         + 리소스 조회
         + 서버에 전달하고 싶은 데이터는 query(쿼리 파라미터, 쿼리 스트릴)를 통해서 전달
         + 메시지 바디를 사용해서 데이터를 전달할 수 있지만, 지원하지 않는 곳이 많아서 권장하지 않음
       + 순서 : 
-        + 1. 리소스 조회 - 메시지 전달
+        + 1. 리소스 조회 - 메시지 전달 
           + ![http-method-get-1.png](images/http-method-get-1.png)
         + 2. 리소스 조회 - 서버 도착 
           + ![http-method-get-2.png](images/http-method-get-2.png)
         + 3. 리소스 조회 - 응답 데이터
           + ![http-method-get-3.png](images/http-method-get-3.png)
-    + POST : 요청 데이터 처리, 주로 등록에 사용
-      + 의미 : 
-        + 요청 데이터 처리
-        + <U>**메시지 바디를 통해 서버로 요청 데이터 전달**</U>
-        + 서버는 요청 데이터를 처리
-          + 메시지 바디를 통해 들어온 데이터를 처리하는 모든 기능을 수행한다.
-        + 주로 전달된 데이터로 신규 리소스 등록, 프로세스 처리에 사용
-      + 순서 : 
-        + 1. 리소스 등록 - 메시지 전달
-          + ![http-method-post-1.png](images%2Fhttp-method-post-1.png)
-        + 2. 리소스 등록 - 신규 리소스 생성
-          + ![http-method-post-2.png](images%2Fhttp-method-post-2.png)
-        + 3. 리소스 등록 - 응답 데이터
-          + ![http-method-post-3.png](images%2Fhttp-method-post-3.png)
-    + PUT : 리소스를 (완전히) 대체, 해당 리소스가 없으면 생성 
-    + PATCH : 리소스 부분 변경
-    + DELETE : 리소스 삭제
-    + HEAD : GET과 동일하지만 메시지 부분을 제외하고, 상태 줄과 헤더만 반환
-    + OPTIONS : 대상 리소스에 대한 통신 가능 옵션(메서드)을 설명(주로 CORS에서 사용)
-    + CONNECT : 대상 자원으로 식별되는 서버에 대한 터널을 설정
-    + TRACE : 대상 리소스에 대한 경로를 따라 메시지 루프백 테스트를 수행
+  + POST : 요청 데이터 처리, 주로 등록에 사용
+    + 의미 : 
+      + 요청 데이터 처리
+      + <U>**메시지 바디를 통해 서버로 요청 데이터 전달**</U>
+      + 서버는 요청 데이터를 처리
+        + 메시지 바디를 통해 들어온 데이터를 처리하는 모든 기능을 수행한다.
+      + 주로 전달된 데이터로 신규 리소스 등록, 프로세스 처리에 사용
+    + 순서 : 
+      + 1. 리소스 등록 - 메시지 전달
+        + ![http-method-post-1.png](images/http-method-post-1.png)
+      + 2. 리소스 등록 - 신규 리소스 생성
+        + ![http-method-post-2.png](images/http-method-post-2.png)
+      + 3. 리소스 등록 - 응답 데이터
+        + ![http-method-post-3.png](images/http-method-post-3.png)
+    + 스펙 : POST 메서드는 대상 리소스가 리소소의 고유 한 의미 체계에 따라 요청에 포함 된 표현을 처리하도록 요청 합니다.
+    + 예)
+      + HTML 양식에 입력 된 필드와 같은 데이터 블록을 데이터 처리 프로세스에 제공
+        + 예) HTML FORM에 입력한 정보로 회원가입, 주문 등에서 사용
+      + 게시판 뉴스 그룹, 메일링 리스트, 블로그 또는 유사한 기사 그룹에 메시지 게시
+        + 예) 게시판 글쓰기, 댓글 달기
+      + 서버가 아직 식별하지 않은 새 리소스 생성
+        + 예) 신규 주문 생성
+      + 기존 자원에 데이터 추가
+        + 예) 한 문서 끝에 내용 추가하기
+    + 정리 : <U>**이 리소스 URI에 POST 요청이 오면 요청 데이터를 어떻게 처리할지 리소스마다 따로 정해야함 -> 정해진 것이 없다.**</U>
+      + 1. 새 리소스 생성(등록)
+        2. 요청 데이터 처리
+        3. 다른 메서드를 처리하기 애매한 경우
+  + PUT : 리소스를 (완전히) 대체, 해당 리소스가 없으면 생성 
+    + 리소스를 대체 : 
+      + 리소스가 있으면 대체
+        + 1. 리소스가 있는 경우
+          + ![http-method-put-already-1.png](images/http-method-put-already-1.png)
+          + ![http-method-put-already-2.png](images/http-method-put-already-2.png)
+      + 리소스가 없으면 생성
+        + 2. 리소스가 없는 경우
+          + ![http-method-put-none-1.png](images/http-method-put-none-1.png)
+          + ![http-method-put-none-2.png](images/http-method-put-none-2.png) 
+      + 리소스 대체 
+        + 3. 리소스를 완전히 대체
+          + ![http-method-put-all-change-1.png](images/http-method-put-all-change-1.png)
+          + ![http-method-put-all-change-2.png](images/http-method-put-all-change-2.png)  
+    + 중요! 클라이언트가 리소스를 식별
+      + 클라이언트가 리소스 위치를 알고 URI 지정
+      + POST와 차이점
+  + PATCH : 리소스 부분 변경
+    + 순서 : 
+      + 리소스 부분 변경
+        + ![http-method-patch-spot-change-1.png](images/http-method-patch-spot-change-1.png)
+        + ![http-method-patch-spot-change-2.png](images/http-method-patch-spot-change-2.png)
+  + DELETE : 리소스 삭제
+    + 순서 : 
+      + 리소스 삭제
+        + ![http-method-delete-1.png](images/http-method-delete-1.png)
+        + ![http-method-delete-2.png](images/http-method-delete-2.png)
+  + HEAD : GET과 동일하지만 메시지 부분을 제외하고, 상태 줄과 헤더만 반환
+  + OPTIONS : 대상 리소스에 대한 통신 가능 옵션(메서드)을 설명(주로 CORS에서 사용)
+  + CONNECT : 대상 자원으로 식별되는 서버에 대한 터널을 설정
+  + TRACE : 대상 리소스에 대한 경로를 따라 메시지 루프백 테스트를 수행

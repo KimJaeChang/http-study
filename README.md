@@ -552,3 +552,21 @@
           4. image=/jpeg
           5. text/html;level=2
           6. text/html;level=3
+    
+    + ### 전송 방식
+      + #### 단순 전송
+        + ![http-simple-send.png](images/http-simple-send.png)
+        + Content-Length 값 지정
+      + #### 압축 전송
+        + ![http-compression-send.png](images/http-compression-send.png)
+        + Content-Encoding 값 지정
+      + #### 분할 전송
+        + ![http-division-send.png](images/http-division-send.png)
+        + Transfer-Encoding 값 지정
+        + <span style="color:red"><U>**Content-Length의 값을 지정하며 안됨**</U></span>
+          1. 5, Hello
+          2. 5, World
+          3. 0, /r/n : "끝" 이라는 표현
+      + #### 범위 전송
+        + ![http-range-send.png](images/http-range-send.png)
+        + Content-Range 값 지정

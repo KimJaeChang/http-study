@@ -326,3 +326,69 @@
         + save 버튼의 결과로 아무 내용이 없어도 된다.
         + save 버튼을 눌러도 같은 화면을 유지해야 한다.
         + 결과 내용이 없어도 204 메시지(2xx)만으로 성공을 인식할 수 있다.
+    + ### 3xx (Redirection)
+      + #### Redirection 이해 : 
+        + 웹 브라우저는 3xx 응답의 결과에 <U>**Location**</U> 헤더가 있으면, Location 위치로 자동 이동 (Redirect)
+        + ![http-status-redirect.png](images/http-status-redirect.png)
+      + 종류 : 
+        + #### 영구 Redirection - 특정 리소스의 URI가 영구적으로 이동
+          + 리소스의 URI가 영구적으로 이동
+          + 원래의 URL을 사용하지 않음, 검색 엔진 등에서도 변경 인지
+            + 예) /members -> /users
+            + 예) /event -> /new-event
+            
+        + #### 일시 Redirection - 일시적인 변경
+          + 리소스의 URI가 일시적으로 변경
+          + 따라서 검색 엔진 등에서 URL을 변경하면 안됨
+          + 주문 완료 후 주문 내역 화면으로 이동
+          + PRG : Post/Redirect/Get
+            + 예)
+              + POST로 주문 후에 웹 브라우저를 새로고침 하면?
+              + 새로고침은 다시 요청
+              + <span style="color:red"><U>**중복 주문이 될 수 있다.**</U></span>
+            + 해결 방법
+              + POST로 주문 후에 새로고침으로 인한 중복 주문 방지
+              + POST로 주문 후에 주문 결과 화면을 GET 메서드로 Redirect
+              + 새로고침 해도 결과 화면은 GET으로 조회됨
+              + 중복 주문 대신에 결과 화면만 GET으로 다시 요청
+            + 사용 전 
+              + ![https-status-redirect-prg-before.png](images/https-status-redirect-prg-before.png)
+            + 사용 후
+              + ![https-status-redirect-prg-after.png](images/https-status-redirect-prg-after.png)
+              + URL이 이미 POST -> GET으로 Redirect 됨
+              + 새로 고침 해도 GET으로 결과 화면만 조회
+          + 역사 :
+            + 처음 302 스펙의 의도는 HTTP 메서드를 유지하는 것
+            + 그런데 웹 브라우저들이 대부분 GET으로 바꾸어버림 (일부는 다르게 동작)
+            + 그래서 모호한 302를 대신하는 303,307이 등장함 (301 대응으로 308도 등장)
+          + 현실 : 
+            + 303 307을 권장하지만 현실적으로 이미 많은 애플리케이션 라이브러리들이 302를 기본값으로 사용
+            + 자동 Redirection 시에 GET 으로 변해도 되면 그냥 302를 사용해도 큰 문제 없음
+            
+        + #### 특수 Redirection
+          + 결과 대신 캐시를 사용
+          
+      + #### 정의 
+        + 300 Multiple Choices
+          + 안 쓴다.
+        + 301 Moved Permanently (영구 Redirection)
+          + Redirect시 요청 메서드가 GET으로 변하고, 본문이 제거될 수 있음 (MAY)
+          + ![http-statis-redirect-301.png](images/http-statis-redirect-301.png)
+        + 302 Found (일시 Redirection)
+          + Redirect시 요청 메서드가 GET으로 변하고, 본문이 제거될 수 있음 (MAY)
+        + 303 See Other (일시 Redirection)
+          + 302와 기능은 같음
+          + Redirect시 요청 메서드가 GET으로 변경
+        + 304 Not Modified
+          + 캐시를 목적으로 사용
+          + 클라이언트에게 리소스가 수정되지 않았음을 알려준다.
+          + 따라서 클라이언트는 Local PC에 저장된 캐시를 재 사용한다. (캐시로 Redirect 한다)
+          + 304 응답은 응답에 메시지 바디를 포함하면 안된다. (Local 캐시를 사용해야 하므로)
+          + 조건부 GET, HEAD 요청시 사용
+        + 307 Temporary Redirect (일시 Redirection)
+          + 302와 기능은 같음
+          + Redirect시 요청 메서드와 본문 유지 (요청 메서드를 변경하면 안된다. MUST NOT)
+        + 308 Permanent Redirect (영구 Redirection)
+          + 301과 기능은 같음
+          + Redirect시 요청 메서드와 본문 유지(처음 POST를 보내면 Redirect도 POST)
+          + ![http-statis-redirect-308.png](images/http-statis-redirect-308.png)

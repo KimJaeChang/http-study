@@ -310,4 +310,19 @@
     + 메시지 바디를 통한 데이터 전송
       + POST, PUT, PATCH
       + 회원 가입, 상품 주문, 리소스 등록, 리소스 변경
-  
+
+  + ### HTTP 상태코드
+    + ### 2xx (Sucesssful)
+      + 200 OK
+        + ![http-status-200.png](images/http-status-200.png)
+      + 201 Created
+        + ![http-status-201.png](images/http-status-201.png)
+      + 202 Accepted
+        + 요청이 접수되었으나 처리가 완료되지 않았음
+        + 배치 처리 같은 곳에서 사용
+      + 204 No Content
+        + 서버가 요청을 성공적으로 수행했지만, 응답 Payload 본문에 보낼 데이터가 없음
+        + 예) 웹 문서 편집기에서 save 버튼
+        + save 버튼의 결과로 아무 내용이 없어도 된다.
+        + save 버튼을 눌러도 같은 화면을 유지해야 한다.
+        + 결과 내용이 없어도 204 메시지(2xx)만으로 성공을 인식할 수 있다.

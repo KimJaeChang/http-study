@@ -706,7 +706,7 @@
         + ![cache-after-2.png](images/cache-after-2.png)
         + ![cache-after-3.png](images/cache-after-3.png)
         + 캐시 덕분에 캐시 가능 시간동안 네트워크를 사용하지 않아도 된다.
-        + 비싼 네트워크 사용량을 줄일 수 있디.
+        + 비싼 네트워크 사용량을 줄일 수 있다.
         + 브라우저 로딩 속도가 매우 빠르다.
         + 빠른 사용자 경험
       + 캐시 적용 후 - 캐시 시간 초과
@@ -715,3 +715,29 @@
         + ![cache-after-timeout-3.png](images/cache-after-timeout-3.png)
         + 캐시 유효 시간이 초과화면, 서버를 통해 데이터를 다시 조회하고, 캐시를 갱신한다.
         + 이 때 다시 네트워크 다운로드가 발생한다.
+        
+    + ### 검증 헤더
+      + 캐시 시간 초과
+        + 캐시 유효 시간이 초과해서 서버에 다시 요청하면 다음 두가지 상황이 나타난다.
+          1. 서버에서 기존 데이터를 변경함
+          2. 서버에서 기존 데이터를 변경하지 않음
+        + 캐시 만료후에도 서버에서 데이터를 변경하지 않음
+        + 생각해보면 데이터를 전송하는 대신에 저장해 두었던 캐시를 재사용 할 수 있다.
+        + <span style="color:red"><U>**단 클라이언트의 데이터와 서버의 데이터가 같다는 사실을 확인할 수 있는 방법 필요**</U></span>
+      + ### 검증 헤더와 조건부 요청
+        + ![cache-verification-header-1.png](images/cache-verification-header-1.png)
+        + ![cache-verification-header-2.png](images/cache-verification-header-2.png)
+        + ![cache-verification-header-3.png](images/cache-verification-header-3.png)
+        + ![cache-verification-header-4.png](images/cache-verification-header-4.png)
+        + ![cache-verification-header-5.png](images/cache-verification-header-5.png)
+        + ![cache-verification-header-6.png](images/cache-verification-header-6.png)
+        + ![cache-verification-header-7.png](images/cache-verification-header-7.png)
+        + 캐시 유효 시간이 초과해도, 서버의 데이터가 갱신되지 않으면 
+        + 304 Not Modified + Header 메타 정보만 응답(Body X, Last-Modified 사용)
+        + 클라이언트는 서버가 보낸 응답 헤더 정보로 캐시의 메타 정보를 갱신 (If-modified-since)
+        + 클라이언트는 캐시에 저장되어 있는 데이터 재활용
+        + 결과적으로 네트워크 다운로드가 발생하지만 용량이 적은 헤더 정보만 다운로드
+        + 매우 실용적인 해결책
+
+
++ #### 김영한님의 모든 개발자를 위한 HTTP 웹 기본 지식을 수강하면서 정리한 내용입니다. 

@@ -692,3 +692,26 @@
       + SameSite
         + XSRF 공격 방지
         + 요청 도메인과 쿠키에 설정된 도메인이 같은 경우만 쿠키 전송
+        
+    + ### 캐시
+      + 캐시 미 적용
+        + ![cache-before-1.png](images/cache-before-1.png)
+        + ![cache-before-2.png](images/cache-before-2.png)
+        + 데이터가 변경되지 않아도 계속 네트워크를 통해서 데이터를 다운로드 받아야 한다.
+        + 인터넷 네트워크는 매우 느리고 비싸다.
+        + 브라우저 로딩 속도가 느리다.
+        + 느린 사용자 경험
+      + 캐시 적용
+        + ![cache-after-1.png](images/cache-after-1.png)
+        + ![cache-after-2.png](images/cache-after-2.png)
+        + ![cache-after-3.png](images/cache-after-3.png)
+        + 캐시 덕분에 캐시 가능 시간동안 네트워크를 사용하지 않아도 된다.
+        + 비싼 네트워크 사용량을 줄일 수 있디.
+        + 브라우저 로딩 속도가 매우 빠르다.
+        + 빠른 사용자 경험
+      + 캐시 적용 후 - 캐시 시간 초과
+        + ![cache-after-timeout-1.png](images/cache-after-timeout-1.png)
+        + ![cache-after-timeout-2.png](images/cache-after-timeout-2.png)
+        + ![cache-after-timeout-3.png](images/cache-after-timeout-3.png)
+        + 캐시 유효 시간이 초과화면, 서버를 통해 데이터를 다시 조회하고, 캐시를 갱신한다.
+        + 이 때 다시 네트워크 다운로드가 발생한다.
